@@ -7,11 +7,91 @@ import initialStateData from "./InitialData";
 // import local components
 import Column from "./components/Column";
 
+// import bootstrap
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+
 function App() {
   // initiliaze state
   const [stateArchitecture, setStateArchitecture] = useState(initialStateData);
-
+  const [newTaskPlaceholder, setNewTaskPlaceholder] = useState({
+    id: "",
+    content: ""
+  });
+  // Initialized to ensure each form is unique
+  const [currentColumnInputFirst, setCurrentColumnInputFirst] = useState("");
+  const [currentColumnInputSecond, setCurrentColumnInputSecond] = useState("");
+  const [modalShow, setModalShow] = React.useState(false);
   // functions
+
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Modal heading
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Centered Modal</h4>
+          <p>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
+            ac consectetur ac, vestibulum at eros.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
+  const handleInputFirst = (event, column) => {
+    console.log(event);
+    console.log(column);
+    setCurrentColumnInputFirst(column.id);
+    setNewTaskPlaceholder({ ...newTaskPlaceholder, id: event.target.value });
+  };
+
+  const handleInputSecond = (event, column) => {
+    setCurrentColumnInputSecond(column.id);
+    setNewTaskPlaceholder({
+      ...newTaskPlaceholder,
+      content: event.target.value
+    });
+  };
+
+  const handleAddTaskSubmit = (event, column) => {
+    event.preventDefault();
+    console.log("submit");
+    // Need logic to add form data to tasks object
+    const newTasks = stateArchitecture.tasks;
+    newTasks[newTaskPlaceholder.id] = newTaskPlaceholder;
+    console.log("newTasks");
+    console.log(newTasks);
+    // Need to add task in column's taskIds array
+    const newColumnOrder = stateArchitecture.columns[column.id].taskIds;
+    newColumnOrder.push(newTaskPlaceholder.id);
+    console.log("newColumnOrder");
+    console.log(newColumnOrder);
+    // Copy columns and update changes
+    const newColumns = stateArchitecture.columns;
+    // Copy state and update
+    const newState = { ...stateArchitecture, columns: newColumns };
+    console.log("newState");
+    console.log(newState);
+    //update state
+    setStateArchitecture(newState);
+    return;
+  };
+
   const onDragEnd = result => {
     //TODO: Reorder our column
     const { destination, source, draggableId, type } = result;
@@ -122,7 +202,48 @@ function App() {
                   column={column}
                   tasks={tasks}
                   columnIndex={index}
-                />
+                >
+                  {/* Add task function start */}
+                  {/* Modal */}
+                  <ButtonToolbar>
+                    <Button
+                      variant="primary"
+                      onClick={() => setModalShow(true)}
+                    >
+                      Add New Task
+                    </Button>
+
+                    <MyVerticallyCenteredModal
+                      show={modalShow}
+                      onHide={() => setModalShow(false)}
+                    />
+                  </ButtonToolbar>
+                  {/* Modal */}
+                  <form onSubmit={event => handleAddTaskSubmit(event, column)}>
+                    <label>TaskId</label>
+                    <input
+                      type="text"
+                      value={
+                        currentColumnInputFirst === columnId
+                          ? newTaskPlaceholder.id
+                          : ""
+                      }
+                      onChange={event => handleInputFirst(event, column)}
+                    />
+                    <label>Content</label>
+                    <input
+                      type="text"
+                      value={
+                        currentColumnInputSecond === columnId
+                          ? newTaskPlaceholder.content
+                          : ""
+                      }
+                      onChange={event => handleInputSecond(event, column)}
+                    />
+                    <button>Add Task</button>
+                  </form>
+                  {/* Add task function end */}
+                </Column>
               );
             })}
             {provided.placeholder}

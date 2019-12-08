@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 // Import stylesheet
 import "../assets/stylesheets/Column.css";
@@ -17,6 +17,7 @@ const Column = props => {
           <h1 className="component-column-title" {...provided.dragHandleProps}>
             {props.column.title}
           </h1>
+          {props.children}
           <Droppable droppableId={props.column.id} type="task">
             {provided => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
