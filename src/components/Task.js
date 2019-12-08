@@ -7,7 +7,7 @@ import "../assets/stylesheets/Task.css";
 const Task = props => {
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
-      {provided => (
+      {(provided, snapshot) => (
         <div
           className="component-task-container"
           {...provided.draggableProps}

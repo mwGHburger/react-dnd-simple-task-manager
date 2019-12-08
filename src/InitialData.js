@@ -3,9 +3,9 @@ const initialStateData = {
     "task-1": { id: "task-1", content: "Content 1" },
     "task-2": { id: "task-2", content: "Content 2" },
     "task-3": { id: "task-3", content: "Content 3" },
-    "task-4": { id: "task-3", content: "Content 4" },
-    "task-5": { id: "task-3", content: "Content 5" },
-    "task-6": { id: "task-3", content: "Content 6" }
+    "task-4": { id: "task-4", content: "Content 4" },
+    "task-5": { id: "task-5", content: "Content 5" },
+    "task-6": { id: "task-6", content: "Content 6" }
   },
   columns: {
     "column-1": {
@@ -22,7 +22,7 @@ const initialStateData = {
     }
   },
   // Allows the reordering of the columns
-  columnOrder: ["column-1"]
+  columnOrder: ["column-1", "column-2"]
 };
 
 export default initialStateData;
