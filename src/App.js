@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import "./App.css";
+// import state data
+import initialStateData from "./InitialData";
+
+// import local components
+import Column from "./components/Column";
 
 function App() {
+  // initiliaze state
+  const [stateArchitecture, setStateArchitecture] = useState(initialStateData);
+
+  // functions
+  const onDragEnd = result => {
+    //TODO: Reorder our column
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DragDropContext onDragEnd={onDragEnd}>
+      {stateArchitecture.columnOrder.map(columnId => {
+        // pull column out of state
+        const column = stateArchitecture.columns[columnId];
+        // pull tasks associated with respective column out of state
+        const tasks = column.taskIds.map(taskId => {
+          return stateArchitecture.tasks[taskId];
+        });
+        return <Column key={column.id} column={column} tasks={tasks} />;
+      })}
+    </DragDropContext>
   );
 }
 
