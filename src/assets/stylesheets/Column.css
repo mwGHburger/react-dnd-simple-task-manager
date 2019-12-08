@@ -11,5 +11,7 @@
 
 .component-column-title {
   padding: 8px;
-  color: rgb(150, 150, 150);
+  color: rgb(100, 100, 100);
+  background: #f2f2f0;
+  border-radius: 5px;
 }
