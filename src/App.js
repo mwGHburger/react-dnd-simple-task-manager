@@ -199,8 +199,8 @@ function App() {
                   {/* Add task function start */}
                   <form onSubmit={event => handleAddTaskSubmit(event, column)}>
                     {/* TaskId is updated automatically in the background */}
-                    <label>Content</label>
                     <input
+                      className="add-task-input"
                       type="text"
                       value={
                         currentColumnInputSecond === columnId
@@ -209,7 +209,9 @@ function App() {
                       }
                       onChange={event => handleInputSecond(event, column)}
                     />
-                    <button type="submit">Add Task</button>
+                    <button className="add-task-btn" type="submit">
+                      Add Task
+                    </button>
                   </form>
                   {/* Add task function end */}
                 </Column>

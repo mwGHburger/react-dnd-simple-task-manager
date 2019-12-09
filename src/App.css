@@ -4,3 +4,22 @@
   padding: 32px 64px;
   display: flex;
 }
+
+.add-task-input {
+  padding: 0px 16px;
+  margin: 24px auto;
+  border-radius: 4px;
+  border: 1px rgb(200, 200, 200) solid;
+  width: 150px;
+}
+
+.add-task-input:focus {
+  outline: none;
+}
+
+.add-task-btn {
+  padding: 0px 8px;
+  margin-left: 8px;
+  background: none;
+  border-radius: 15px;
+}
