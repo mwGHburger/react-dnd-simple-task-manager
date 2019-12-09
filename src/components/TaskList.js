@@ -8,7 +8,13 @@ const TaskList = props => {
   return (
     <div className="component-tasklist-container">
       {props.tasks.map((task, index) => (
-        <Task key={task.id} task={task} index={index} />
+        <Task
+          key={task.id}
+          task={task}
+          index={index}
+          handleDeleteTask={props.handleDeleteTask}
+          columnId={props.columnId}
+        />
       ))}
     </div>
   );

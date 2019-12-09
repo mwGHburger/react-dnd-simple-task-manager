@@ -147,6 +147,31 @@ function App() {
     return;
   };
 
+  const handleDeleteTask = (taskId, columnId) => {
+    console.log(taskId);
+    console.log(columnId);
+    // Using the taskId, delete it from tasks object in stateArchitecture
+    const copyTasks = stateArchitecture.tasks;
+    delete copyTasks[taskId];
+    const newTasks = { ...stateArchitecture.tasks, copyTasks };
+    console.log(copyTasks);
+    // Using the taskId, delete it from taskIds array from given array in stateArchitecture
+    const copyColumnObject = stateArchitecture.columns[columnId];
+    console.log(copyColumnObject);
+    const copyTaskIds = copyColumnObject.taskIds;
+    console.log(copyTaskIds);
+    const filteredTaskIds = copyTaskIds.filter(task => task !== taskId);
+    console.log("filteredTaskIds");
+    console.log(filteredTaskIds);
+    copyColumnObject.taskIds = filteredTaskIds;
+
+    // update stateArchitecture
+    const newState = { ...stateArchitecture };
+    console.log("newState");
+    console.log(newState);
+    setStateArchitecture(newState);
+  };
+
   const onDragEnd = result => {
     //TODO: Reorder our column
     const { destination, source, draggableId, type } = result;
@@ -266,6 +291,7 @@ function App() {
                     column={column}
                     tasks={tasks}
                     columnIndex={index}
+                    handleDeleteTask={handleDeleteTask}
                   >
                     {/* Add task function start */}
                     <AddNewTaskBtn

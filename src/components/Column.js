@@ -21,7 +21,11 @@ const Column = props => {
           <Droppable droppableId={props.column.id} type="task">
             {provided => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
-                <TaskList tasks={props.tasks} />
+                <TaskList
+                  tasks={props.tasks}
+                  handleDeleteTask={props.handleDeleteTask}
+                  columnId={props.column.id}
+                />
                 {provided.placeholder}
               </div>
             )}
