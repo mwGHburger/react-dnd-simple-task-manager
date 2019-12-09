@@ -7,58 +7,33 @@ import initialStateData from "./InitialData";
 // import local components
 import Column from "./components/Column";
 
-// import bootstrap
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-
 function App() {
   // initiliaze state
   const [stateArchitecture, setStateArchitecture] = useState(initialStateData);
+  // required for add new task functionality
+  const [prefixUniqueNo, setPrefixUniqueNo] = useState({
+    // Ensure there is no duplication of unique Ids
+    uniqueNumber: 7,
+    prefix: "task-"
+  });
   const [newTaskPlaceholder, setNewTaskPlaceholder] = useState({
-    id: "",
+    id: `${prefixUniqueNo.prefix}${prefixUniqueNo.uniqueNumber}`,
     content: ""
   });
   // Initialized to ensure each form is unique
-  const [currentColumnInputFirst, setCurrentColumnInputFirst] = useState("");
+  // const [currentColumnInputFirst, setCurrentColumnInputFirst] = useState("");
   const [currentColumnInputSecond, setCurrentColumnInputSecond] = useState("");
-  const [modalShow, setModalShow] = React.useState(false);
+
   // functions
+  // TODO: Delete this logic, we no longer require manual user input for taskId
+  // const handleInputFirst = (event, column) => {
+  //   console.log(event);
+  //   console.log(column);
+  //   setCurrentColumnInputFirst(column.id);
+  //   setNewTaskPlaceholder({ ...newTaskPlaceholder, id: event.target.value });
+  // };
 
-  function MyVerticallyCenteredModal(props) {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-
-  const handleInputFirst = (event, column) => {
-    console.log(event);
-    console.log(column);
-    setCurrentColumnInputFirst(column.id);
-    setNewTaskPlaceholder({ ...newTaskPlaceholder, id: event.target.value });
-  };
+  // Generate unqiue taskId
 
   const handleInputSecond = (event, column) => {
     setCurrentColumnInputSecond(column.id);
@@ -68,8 +43,25 @@ function App() {
     });
   };
 
+  const createNewTaskId = () => {
+    const newPrefixUniqueNo = {
+      ...prefixUniqueNo,
+      uniqueNumber: prefixUniqueNo.uniqueNumber + 1
+    };
+    // Update
+    setPrefixUniqueNo(newPrefixUniqueNo);
+    const newTaskId = `${newPrefixUniqueNo.prefix}${newPrefixUniqueNo.uniqueNumber}`;
+    const updatedNewPlaceholder = { ...newTaskPlaceholder, id: newTaskId };
+    setNewTaskPlaceholder(updatedNewPlaceholder);
+    // although this aims to update the taskId, it is too slow to be executed during the handleAddTaskSubmit function so it lags behind 1 id.
+    // Therefore, the first new Id created will be id that is initially in the newTaskPlaceholder
+    // I have tried using callback functions/promises to overcome this but to no avail
+    // It works now but would like to polish it
+  };
+
   const handleAddTaskSubmit = (event, column) => {
     event.preventDefault();
+    createNewTaskId();
     console.log("submit");
     // Need logic to add form data to tasks object
     const newTasks = stateArchitecture.tasks;
@@ -175,6 +167,7 @@ function App() {
       };
       // Update state data with changes
       setStateArchitecture(newState);
+
       // return is important to stop the function from continuing
       return;
     }
@@ -204,32 +197,8 @@ function App() {
                   columnIndex={index}
                 >
                   {/* Add task function start */}
-                  {/* Modal */}
-                  <ButtonToolbar>
-                    <Button
-                      variant="primary"
-                      onClick={() => setModalShow(true)}
-                    >
-                      Add New Task
-                    </Button>
-
-                    <MyVerticallyCenteredModal
-                      show={modalShow}
-                      onHide={() => setModalShow(false)}
-                    />
-                  </ButtonToolbar>
-                  {/* Modal */}
                   <form onSubmit={event => handleAddTaskSubmit(event, column)}>
-                    <label>TaskId</label>
-                    <input
-                      type="text"
-                      value={
-                        currentColumnInputFirst === columnId
-                          ? newTaskPlaceholder.id
-                          : ""
-                      }
-                      onChange={event => handleInputFirst(event, column)}
-                    />
+                    {/* TaskId is updated automatically in the background */}
                     <label>Content</label>
                     <input
                       type="text"
@@ -240,7 +209,7 @@ function App() {
                       }
                       onChange={event => handleInputSecond(event, column)}
                     />
-                    <button>Add Task</button>
+                    <button type="submit">Add Task</button>
                   </form>
                   {/* Add task function end */}
                 </Column>
