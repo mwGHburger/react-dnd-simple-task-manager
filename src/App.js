@@ -21,7 +21,7 @@ function App() {
   // State to add new column
   const [newColumnPlaceholder, setNewColumnPlaceholder] = useState({
     id: `${columnPrefixUniqueNo.prefix}${columnPrefixUniqueNo.uniqueNumber}`,
-    title: "test",
+    title: "",
     taskIds: []
   });
 
@@ -240,7 +240,8 @@ function App() {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="All-Columns" direction="horizontal" type="column">
         {provided => (
-          <div>
+          <div className="component-app-container">
+            <h1>Minimalistic Project Manager</h1>
             {/* Form to add new column*/}
             <AddNewColumnBtn
               handleNewColumnSubmit={handleNewColumnSubmit}
@@ -248,7 +249,7 @@ function App() {
               handleInputColumnTitle={handleInputColumnTitle}
             />
             <div
-              className="component-app-container"
+              className="component-app-container-columns"
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
