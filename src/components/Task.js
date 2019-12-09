@@ -14,7 +14,15 @@ const Task = props => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {props.task.content}
+          <p>{props.task.content}</p>
+          <button
+            className="delete-task-btn"
+            onClick={() =>
+              props.handleDeleteTask(props.task.id, props.columnId)
+            }
+          >
+            X
+          </button>
         </div>
       )}
     </Draggable>

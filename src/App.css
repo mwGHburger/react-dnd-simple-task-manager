@@ -17,7 +17,7 @@
 }
 
 .add-task-input:focus {
-  background: #eafcdb;
+  background: #fff5dd;
   outline: none;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .add-task-btn:hover {
-  background: rgb(210, 210, 210);
+  background: #fff5dd;
   transform: translate(-0.5px, -1px);
 }
 
@@ -70,7 +70,7 @@
 }
 
 .add-column-input:focus {
-  background: #eafcdb;
+  background: #fff5dd;
   outline: none;
 }
 
@@ -80,7 +80,6 @@
   background: none;
   border-radius: 15px;
   width: 25%;
-  transition: 0.5s;
 }
 
 .add-column-btn:focus {
@@ -88,6 +87,6 @@
 }
 
 .add-column-btn:hover {
-  background: rgb(250, 250, 250);
+  background: #fff5dd;
   transform: translate(-0.5px, -1px);
 }
