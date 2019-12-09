@@ -6,10 +6,24 @@ import initialStateData from "./InitialData";
 
 // import local components
 import Column from "./components/Column";
+import AddNewColumnBtn from "./components/AddNewColumnBtn";
 
 function App() {
   // initiliaze state
   const [stateArchitecture, setStateArchitecture] = useState(initialStateData);
+  // required for add new column functionality
+  const [columnPrefixUniqueNo, setColumnPrefixUniqueNo] = useState({
+    // Ensure there is no duplication of unique Ids
+    uniqueNumber: 3,
+    prefix: "column-"
+  });
+  // State to add new column
+  const [newColumnPlaceholder, setNewColumnPlaceholder] = useState({
+    id: `${columnPrefixUniqueNo.prefix}${columnPrefixUniqueNo.uniqueNumber}`,
+    title: "test",
+    taskIds: []
+  });
+
   // required for add new task functionality
   const [prefixUniqueNo, setPrefixUniqueNo] = useState({
     // Ensure there is no duplication of unique Ids
@@ -34,6 +48,54 @@ function App() {
   // };
 
   // Generate unqiue taskId
+
+  const handleInputColumnTitle = event => {
+    setNewColumnPlaceholder({
+      ...newColumnPlaceholder,
+      title: event.target.value
+    });
+  };
+
+  const createNewColumnId = () => {
+    const newColumnPrefixUniqueNo = {
+      ...columnPrefixUniqueNo,
+      uniqueNumber: columnPrefixUniqueNo.uniqueNumber + 1
+    };
+    // Update
+    setColumnPrefixUniqueNo(newColumnPrefixUniqueNo);
+    const newColumnId = `${newColumnPrefixUniqueNo.prefix}${newColumnPrefixUniqueNo.uniqueNumber}`;
+    const updatedNewColumnPlaceholder = {
+      ...newColumnPlaceholder,
+      id: newColumnId
+    };
+    setNewColumnPlaceholder(updatedNewColumnPlaceholder);
+  };
+
+  const handleNewColumnSubmit = event => {
+    event.preventDefault();
+    createNewColumnId();
+    // Add to columns object
+    const newColumns = {
+      ...stateArchitecture.columns,
+      [newColumnPlaceholder.id]: newColumnPlaceholder
+    };
+    console.log(newColumns);
+    // Add to columnOrder
+    const newColumnOrder = [
+      ...stateArchitecture.columnOrder,
+      newColumnPlaceholder.id
+    ];
+    console.log(newColumnOrder);
+    // Update State
+    const newState = {
+      ...stateArchitecture,
+      columns: newColumns,
+      columnOrder: newColumnOrder
+    };
+    console.log(newState);
+    setStateArchitecture(newState);
+    return;
+  };
 
   const handleInputSecond = (event, column) => {
     setCurrentColumnInputSecond(column.id);
@@ -177,47 +239,57 @@ function App() {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="All-Columns" direction="horizontal" type="column">
         {provided => (
-          <div
-            className="component-app-container"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {stateArchitecture.columnOrder.map((columnId, index) => {
-              // pull column out of state
-              const column = stateArchitecture.columns[columnId];
-              // pull tasks associated with respective column out of state
-              const tasks = column.taskIds.map(taskId => {
-                return stateArchitecture.tasks[taskId];
-              });
-              return (
-                <Column
-                  key={column.id}
-                  column={column}
-                  tasks={tasks}
-                  columnIndex={index}
-                >
-                  {/* Add task function start */}
-                  <form onSubmit={event => handleAddTaskSubmit(event, column)}>
-                    {/* TaskId is updated automatically in the background */}
-                    <input
-                      className="add-task-input"
-                      type="text"
-                      value={
-                        currentColumnInputSecond === columnId
-                          ? newTaskPlaceholder.content
-                          : ""
-                      }
-                      onChange={event => handleInputSecond(event, column)}
-                    />
-                    <button className="add-task-btn" type="submit">
-                      Add Task
-                    </button>
-                  </form>
-                  {/* Add task function end */}
-                </Column>
-              );
-            })}
-            {provided.placeholder}
+          <div>
+            {/* Form to add new column*/}
+            <AddNewColumnBtn
+              handleNewColumnSubmit={handleNewColumnSubmit}
+              newColumnPlaceholderTitle={newColumnPlaceholder.title}
+              handleInputColumnTitle={handleInputColumnTitle}
+            />
+            <div
+              className="component-app-container"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {stateArchitecture.columnOrder.map((columnId, index) => {
+                // pull column out of state
+                const column = stateArchitecture.columns[columnId];
+                // pull tasks associated with respective column out of state
+                const tasks = column.taskIds.map(taskId => {
+                  return stateArchitecture.tasks[taskId];
+                });
+                return (
+                  <Column
+                    key={column.id}
+                    column={column}
+                    tasks={tasks}
+                    columnIndex={index}
+                  >
+                    {/* Add task function start */}
+                    <form
+                      onSubmit={event => handleAddTaskSubmit(event, column)}
+                    >
+                      {/* TaskId is updated automatically in the background */}
+                      <input
+                        className="add-task-input"
+                        type="text"
+                        value={
+                          currentColumnInputSecond === columnId
+                            ? newTaskPlaceholder.content
+                            : ""
+                        }
+                        onChange={event => handleInputSecond(event, column)}
+                      />
+                      <button className="add-task-btn" type="submit">
+                        Add Task
+                      </button>
+                    </form>
+                    {/* Add task function end */}
+                  </Column>
+                );
+              })}
+              {provided.placeholder}
+            </div>
           </div>
         )}
       </Droppable>
