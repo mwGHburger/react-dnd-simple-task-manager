@@ -7,6 +7,7 @@ import initialStateData from "./InitialData";
 // import local components
 import Column from "./components/Column";
 import AddNewColumnBtn from "./components/AddNewColumnBtn";
+import AddNewTaskBtn from "./components/AddNewTaskBtn";
 
 function App() {
   // initiliaze state
@@ -266,25 +267,14 @@ function App() {
                     columnIndex={index}
                   >
                     {/* Add task function start */}
-                    <form
-                      onSubmit={event => handleAddTaskSubmit(event, column)}
-                    >
-                      {/* TaskId is updated automatically in the background */}
-                      <input
-                        className="add-task-input"
-                        type="text"
-                        value={
-                          currentColumnInputSecond === columnId
-                            ? newTaskPlaceholder.content
-                            : ""
-                        }
-                        onChange={event => handleInputSecond(event, column)}
-                      />
-                      <button className="add-task-btn" type="submit">
-                        Add Task
-                      </button>
-                    </form>
-                    {/* Add task function end */}
+                    <AddNewTaskBtn
+                      handleAddTaskSubmit={handleAddTaskSubmit}
+                      column={column}
+                      currentColumnInputSecond={currentColumnInputSecond}
+                      columnId={columnId}
+                      newTaskPlaceholderContent={newTaskPlaceholder.content}
+                      handleInputSecond={handleInputSecond}
+                    />
                   </Column>
                 );
               })}

@@ -1,5 +1,4 @@
 .component-tasklist-container {
   padding: 8px 0px;
-  flex-grow: 1;
-  min-height: 200px;
+  max-height: 500px;
 }
