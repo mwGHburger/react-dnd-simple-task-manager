@@ -16,9 +16,10 @@
 .component-column-title {
   font-size: 32px;
   padding: 8px;
-  color: rgb(100, 100, 100);
-  background: #ffeaba;
+  color: white;
+  background: rgb(180, 180, 180);
   border-radius: 5px;
+  text-align: center;
 }
 
 .delete-column-btn {

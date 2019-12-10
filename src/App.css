@@ -2,6 +2,17 @@
   font-family: "Indie Flower", cursive;
   padding: 32px 64px;
 }
+
+.component-app-container > h1 {
+  text-align: center;
+  background: rgb(220, 220, 220);
+  display: inline;
+  padding: 8px 32px 8px 256px;
+  position: relative;
+  left: -250px;
+  box-shadow: rgb(100, 100, 100) 2px 2px 5px;
+}
+
 .component-app-container-columns {
   display: flex;
   flex-wrap: wrap;
