@@ -20,3 +20,50 @@
   background: #ffeaba;
   border-radius: 5px;
 }
+
+.delete-column-btn {
+  background: none;
+  height: 30px;
+  width: 30px;
+  border-radius: 25px;
+  padding: 5px auto;
+  position: relative;
+}
+
+.delete-column-btn:hover {
+  background: #fff5dd;
+  transform: translate(-0.5px, -0.5px);
+  box-shadow: rgb(200, 200, 200) 2px 2px 2px;
+}
+
+.delete-column-btn:focus {
+  outline: none;
+}
+
+.drag-handle {
+  border: 1px rgba(200, 200, 200, 0.5) solid;
+  background: none;
+  height: 30px;
+  width: 30px;
+  border-radius: 25px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: rgb(200, 200, 200);
+}
+
+.drag-handle:hover {
+  color: rgb(50, 50, 50);
+}
+
+.drag-handle:active {
+  color: rgb(50, 50, 50);
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
