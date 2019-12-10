@@ -4,7 +4,7 @@ This a simple task/project managing application created with the React library a
 
 ## Motivation
 
-I created this little project for myself to build upon my knowledge of React to create something a little more complex. It is purely made for educational purposes; helping me to consolidate my knowledge of React concepts, understand its component-based architecture and understand how to use third-party React dependencies.
+I created this little project for myself to build upon my knowledge of React to create something a little more complex. It is purely made for educational purposes, helping me to consolidate my knowledge of React concepts, understand its component-based architecture and how to use third-party React dependencies.
 
 ## Installation
 
