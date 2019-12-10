@@ -11,6 +11,11 @@
   align-items: center;
 }
 
+.component-task-container:hover {
+  box-shadow: rgb(150, 150, 150) 2px 2px 2px;
+  transition: 0.5s;
+}
+
 .component-task-container > p {
   margin: 0px;
 }

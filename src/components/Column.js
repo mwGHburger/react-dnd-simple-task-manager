@@ -14,9 +14,18 @@ const Column = props => {
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
-          <h1 className="component-column-title" {...provided.dragHandleProps}>
-            {props.column.title}
-          </h1>
+          <div className="column-header">
+            <div className="drag-handle" {...provided.dragHandleProps}>
+              <i class="far fa-hand-paper"></i>
+            </div>
+            <button
+              className="delete-column-btn"
+              onClick={() => props.handleDeleteColumn(props.column.id)}
+            >
+              X
+            </button>
+          </div>
+          <h1 className="component-column-title">{props.column.title}</h1>
           {props.children}
           <Droppable droppableId={props.column.id} type="task">
             {provided => (
