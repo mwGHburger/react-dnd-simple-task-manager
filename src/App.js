@@ -127,22 +127,38 @@ function App() {
     createNewTaskId();
     console.log("submit");
     // Need logic to add form data to tasks object
-    const newTasks = stateArchitecture.tasks;
-    newTasks[newTaskPlaceholder.id] = newTaskPlaceholder;
-    console.log("newTasks");
-    console.log(newTasks);
+    const copyTasks = {
+      ...stateArchitecture.tasks,
+      [newTaskPlaceholder.id]: newTaskPlaceholder
+    };
+    console.log("copyTasks");
+    console.log(copyTasks);
+
     // Need to add task in column's taskIds array
-    const newColumnOrder = stateArchitecture.columns[column.id].taskIds;
-    newColumnOrder.push(newTaskPlaceholder.id);
-    console.log("newColumnOrder");
-    console.log(newColumnOrder);
-    // Copy columns and update changes
-    const newColumns = stateArchitecture.columns;
-    // Copy state and update
-    const newState = { ...stateArchitecture, columns: newColumns };
+    const newColumnTaskIds = [
+      ...stateArchitecture.columns[column.id].taskIds,
+      newTaskPlaceholder.id
+    ];
+
+    const copyColumn = {
+      ...stateArchitecture.columns[column.id],
+      taskIds: newColumnTaskIds
+    };
+
+    const copyColumns = {
+      ...stateArchitecture.columns,
+      [column.id]: copyColumn
+    };
+
+    const newState = {
+      ...stateArchitecture,
+      tasks: copyTasks,
+      columns: copyColumns
+    };
+
+    // update stateArchitecture
     console.log("newState");
     console.log(newState);
-    //update state
     setStateArchitecture(newState);
     return;
   };
@@ -166,6 +182,43 @@ function App() {
     copyColumnObject.taskIds = filteredTaskIds;
 
     // update stateArchitecture
+    const newState = { ...stateArchitecture };
+    console.log("newState");
+    console.log(newState);
+    setStateArchitecture(newState);
+  };
+
+  const handleDeleteColumn = columnId => {
+    console.log(columnId);
+    // Update columnsOrder
+    const copyColumnsOrder = [...stateArchitecture.columnOrder];
+    console.log("copyColumnsOrder");
+    console.log(copyColumnsOrder);
+    const filteredColumnsOrder = copyColumnsOrder.filter(
+      column => column !== columnId
+    );
+    console.log("filteredColumnsOrder");
+    console.log(filteredColumnsOrder);
+    stateArchitecture.columnOrder = filteredColumnsOrder;
+    // Update tasks
+    const copyTaskIds = stateArchitecture.columns[columnId].taskIds;
+    console.log("copyTaskIds");
+    console.log(copyTaskIds);
+    const copyTasks = stateArchitecture.tasks;
+    copyTaskIds.forEach(element => {
+      console.log(element);
+      delete copyTasks[element];
+    });
+
+    // Update columns
+    const copyColumns = stateArchitecture.columns;
+    console.log("copyColumns1");
+    console.log(copyColumns);
+    delete copyColumns[columnId];
+    console.log("copyColumns2");
+    console.log(copyColumns);
+
+    // Update stateArchitecture
     const newState = { ...stateArchitecture };
     console.log("newState");
     console.log(newState);
@@ -292,6 +345,7 @@ function App() {
                     tasks={tasks}
                     columnIndex={index}
                     handleDeleteTask={handleDeleteTask}
+                    handleDeleteColumn={handleDeleteColumn}
                   >
                     {/* Add task function start */}
                     <AddNewTaskBtn

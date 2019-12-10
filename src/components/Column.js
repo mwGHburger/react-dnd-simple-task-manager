@@ -14,6 +14,9 @@ const Column = props => {
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
+          <button onClick={() => props.handleDeleteColumn(props.column.id)}>
+            Delete Column
+          </button>
           <h1 className="component-column-title" {...provided.dragHandleProps}>
             {props.column.title}
           </h1>
