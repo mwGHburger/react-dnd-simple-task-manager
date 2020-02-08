@@ -1,8 +1,7 @@
 .component-column-container {
-  background: white;
+  background: #fff;
   margin: 8px 16px;
   padding: 16px 24px;
-  border: 1px rgb(150, 150, 150) solid;
   border-radius: 5px;
   box-shadow: rgb(210, 210, 210) 1px 1px 2px;
   width: 300px;
@@ -10,14 +9,14 @@
 
 .component-column-container:hover {
   transition: 0.5s;
-  box-shadow: rgb(200, 200, 200) 5px 5px 1px;
+  box-shadow: rgb(200, 200, 200) 5px 5px 4px;
 }
 
 .component-column-title {
   font-size: 32px;
   padding: 8px;
-  color: white;
-  background: rgb(180, 180, 180);
+  color: rgb(100, 100, 100);
+  background: #fef5dd;
   border-radius: 5px;
   text-align: center;
 }

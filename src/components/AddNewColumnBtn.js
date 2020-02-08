@@ -3,7 +3,7 @@ import React from "react";
 const AddNewColumnBtn = props => {
   return (
     <div className="add-column-container">
-      <h1>Create New Card</h1>
+      <h1 style={{ color: "rgb(100, 100, 100)" }}>Create New Card</h1>
       <form className="add-column-form" onSubmit={props.handleNewColumnSubmit}>
         <input
           className="add-column-input"

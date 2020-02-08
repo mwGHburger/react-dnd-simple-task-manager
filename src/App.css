@@ -1,6 +1,9 @@
 .component-app-container {
   font-family: "Indie Flower", cursive;
   padding: 32px 64px;
+  height: 100vh;
+  padding: 2rem 10rem;
+  background: #f7f5ed;
 }
 
 .component-app-container > h1 {
@@ -50,14 +53,11 @@
 
 .add-column-container {
   margin: 56px auto;
-  border: 1px rgba(150, 150, 150) solid;
+  border-radius: 4px;
+  background: #fff;
   padding: 32px 24px;
-  width: 50%;
+  width: 100%;
   transition: 0.5s;
-}
-
-.add-column-container:hover {
-  box-shadow: rgb(200, 200, 200) 5px 5px 2px;
 }
 
 .add-column-container > h1 {
@@ -76,7 +76,7 @@
   padding: 0px 16px;
   border-radius: 4px;
   border: 1px rgb(200, 200, 200) solid;
-  width: 50%;
+  width: 20rem;
   transition: 1s;
 }
 
@@ -90,7 +90,7 @@
   padding: 0px 8px;
   background: none;
   border-radius: 15px;
-  width: 25%;
+  width: 15rem;
 }
 
 .add-column-btn:focus {

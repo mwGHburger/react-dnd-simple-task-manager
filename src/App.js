@@ -319,7 +319,6 @@ function App() {
       <Droppable droppableId="All-Columns" direction="horizontal" type="column">
         {provided => (
           <div className="component-app-container">
-            <h1>Minimalistic Project Manager</h1>
             {/* Form to add new column*/}
             <AddNewColumnBtn
               handleNewColumnSubmit={handleNewColumnSubmit}

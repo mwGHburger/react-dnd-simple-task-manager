@@ -18,6 +18,8 @@
 
 .component-task-container > p {
   margin: 0px;
+  word-wrap: break-word;
+  max-width: 186px;
 }
 
 .delete-task-btn {
